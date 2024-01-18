@@ -1,0 +1,118 @@
+@font-face {
+    font-family: 'PixelifySans-Regular';
+    src: url('fonts/PixelifySans-Regular.ttf') format('truetype');
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'PixelifySans-Regular', sans-serif;
+}
+
+#game {
+    background: #F4F2DE;
+    width: 100vw;
+    height: 200px;
+    border: 2px solid #E9B384;
+    position: relative;
+    overflow: hidden;
+}
+
+#player {
+    height: 50px;
+    width: 30px;
+    background: #A1CCD1;
+    position: absolute;
+    bottom: 0;
+}
+
+@keyframes goTowardsLeft {
+    0% {
+        transform: translateX(100vw);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.block-sm {
+    height: 20px;
+    width: 30px;
+    background: #E9B384;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    animation: goTowardsLeft linear 4s;
+}
+
+.block-md {
+    height: 40px;
+    width: 40px;
+    background: #E9B384;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    animation: goTowardsLeft linear 3s;
+}
+
+@keyframes jump {
+    0% {
+        bottom: 0;
+    }
+    40% {
+        bottom: 100px;
+    }
+    70% {
+        bottom: 100px;
+    }
+    100% {
+        bottom: 0;
+    }
+}
+
+.jump {
+    animation: jump ease-out 500ms;
+}
+
+.title-red {
+    color: red;
+    font-size: 38px;
+}
+
+.title-success {
+    color: green;
+    font-size: 38px;
+}
+
+
+.btn-lg {
+    padding: 12px 24px;
+    border-radius: 8px;
+    background: #E9B384;
+    color: #fff;
+    border: none;
+    font-size: 19px;
+    cursor: pointer;
+    font-family: 'PixelifySans-Regular', sans-serif;
+}
+
+.btn-lg:hover {
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.mt-24 {
+    margin-top: 24px;
+}
