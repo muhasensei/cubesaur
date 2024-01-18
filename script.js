@@ -8,9 +8,14 @@ const SPAWNING_INTERVAL = 3000;
 
 const startGame = () => {
     const startTime = new Date().getTime();
+    // clear blocks before start
+    document.querySelectorAll('.block').forEach((block) => block.remove())
+
 
     const stopGame = () => {
         clearInterval(spawning);
+        startBtn.style.visibility = 'visible';
+        startBtn.textContent = 'Restart Game';
 
         const allBlocks = document.querySelectorAll('.block');
         allBlocks.forEach((block) => {
@@ -37,11 +42,9 @@ const startGame = () => {
     window.addEventListener('keyup', (event) => {
         if (
             event.key === 'ArrowUp' ||
-            event.which === 38 ||
             event.code === 'ArrowUp' ||
             event.code === 'Space' ||
-            event.key === '(blank space)' ||
-            event.which === 32
+            event.key === '(blank space)'
         ) {
             player.classList.add('jump');
             player.addEventListener('animationend', () => {
@@ -82,6 +85,6 @@ const startGame = () => {
 
 
 startBtn.addEventListener('click', () => {
-    startBtn.textContent = 'Restart Game';
+    startBtn.style.visibility = 'hidden';
     startGame();
 })
