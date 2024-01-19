@@ -2,15 +2,21 @@ const player = document.getElementById('player');
 const game = document.getElementById('game');
 const result = document.getElementById('result');
 const startBtn = document.getElementById('start-btn');
+const resultText = document.getElementById('resultText');
+
 
 const MAX_GAME_DURATION = 300000; // 5 mins
 const SPAWNING_INTERVAL = 3000;
 
-const startGame = () => {
-    const startTime = new Date().getTime();
-    // clear blocks before start
-    document.querySelectorAll('.block').forEach((block) => block.remove())
+let attempts = 0;
 
+const startGame = () => {
+    console.log({attempts})
+    const startTime = new Date().getTime();
+    startBtn.style.visibility = 'hidden';
+    document.querySelectorAll('.block').forEach((block) => block.remove());
+    resultText.style.visibility = 'hidden';
+    resultText.textContent = '';
 
     const stopGame = () => {
         clearInterval(spawning);
@@ -24,19 +30,17 @@ const startGame = () => {
 
         const duration = new Date().getTime() - startTime;
 
-        const loserText = document.createElement('h1');
-        loserText.className = 'title-red';
+        resultText.style.visibility = 'visible';
+        resultText.className = 'title-red';
 
         if (duration > 100000) {
-            loserText.className = 'title-success';
-            loserText.textContent = `Great game! You managed to last ${new Date().getTime() - startTime} ms`;
+            resultText.className = 'title-success';
+            resultText.textContent = `Great game! You managed to last ${new Date().getTime() - startTime} ms`;
         } else if (duration > 30000) {
-            loserText.textContent = `Nice try. You lasted ${new Date().getTime() - startTime} ms`;
+            resultText.textContent = `Nice try. You lasted ${new Date().getTime() - startTime} ms`;
         } else {
-            loserText.textContent = `You lost. You lasted ${new Date().getTime() - startTime} ms`;
+            resultText.textContent = `You lost. You lasted ${new Date().getTime() - startTime} ms`;
         }
-
-        result.appendChild(loserText);
     }
 
     window.addEventListener('keyup', (event) => {
@@ -67,7 +71,9 @@ const startGame = () => {
                 stopGame();
             } else {
                 block.addEventListener('animationend', () => {
-                    game.removeChild(block);
+                    if (game.contains(block)) {
+                        game.removeChild(block);
+                    }
                     clearInterval(checkIfBlockIsTouched);
                 })
             }
@@ -75,16 +81,10 @@ const startGame = () => {
 
     }, SPAWNING_INTERVAL);
 
-
-    setTimeout(() => {
-        clearInterval(spawning);
-        alert('Please do something useful...');
-    }, MAX_GAME_DURATION);
+    setTimeout(() => clearInterval(spawning), MAX_GAME_DURATION);
 }
 
 
 
-startBtn.addEventListener('click', () => {
-    startBtn.style.visibility = 'hidden';
-    startGame();
-})
+startBtn.addEventListener('click', () => startGame())
+
